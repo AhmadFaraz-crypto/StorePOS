@@ -19,7 +19,13 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        # The committed lockfile is generated on macOS and can't carry Linux's
+        # native optional deps (rollup binaries) or electron-builder's Windows
+        # peer — a known npm limitation (npm/cli#4828). Resolve fresh for the
+        # runner's own platform instead of a strict `npm ci`.
+        run: |
+          rm -f package-lock.json
+          npm install --no-audit --no-fund
 
       - name: Typecheck
         run: npm run typecheck
