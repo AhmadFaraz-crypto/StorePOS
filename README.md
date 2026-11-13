@@ -9,6 +9,20 @@ Built with Electron + React + TypeScript and a local SQLite database.
 > Works fully offline — the till keeps running with no internet. Cloud sync and
 > multi-store management are planned as an optional layer on top (open-core).
 
+## Download
+
+Grab the latest installer from the [**Releases**](https://github.com/AhmadFaraz-crypto/StorePOS/releases) page:
+
+- **Windows** — `StorePOS-<version>-setup.exe` (NSIS installer)
+- **macOS (Apple Silicon)** — `StorePOS-<version>-arm64.dmg`
+- **macOS (Intel)** — `StorePOS-<version>-x64.dmg`
+
+> **Note:** the builds are **not code-signed yet**, so the OS will warn on first launch.
+> - **macOS:** right-click the app → **Open** → **Open** (only needed once).
+> - **Windows:** on the SmartScreen prompt, click **More info → Run anyway**.
+>
+> Code signing (Apple Developer ID + a Windows cert) removes these warnings and can be added later.
+
 ## Features
 
 - **First-run onboarding** — pick a language, name your store, choose a currency, and set an

@@ -1,0 +1,80 @@
+name: Release
+
+# Cut a release by pushing a version tag, e.g.:  git tag v0.1.0 && git push origin v0.1.0
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build ${{ matrix.label }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            label: Windows (x64)
+            args: --win --x64
+          - os: macos-latest
+            label: macOS (Apple Silicon)
+            args: --mac --arm64
+          - os: macos-13
+            label: macOS (Intel)
+            args: --mac --x64
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        # Resolve fresh for the runner's platform (see ci.yml / npm/cli#4828).
+        run: |
+          rm -f package-lock.json
+          npm install --no-audit --no-fund
+
+      - name: Compile app (main / preload / renderer)
+        run: npm run build
+
+      - name: Build installer
+        env:
+          # Unsigned build — skip hunting for an Apple Developer certificate.
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+        run: npx electron-builder ${{ matrix.args }} --publish never
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-${{ matrix.os }}
+          path: |
+            dist/*.dmg
+            dist/*.exe
+          if-no-files-found: ignore
+
+  release:
+    name: Publish draft release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download installers
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create draft release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          generate_release_notes: true
+          files: |
+            artifacts/**/*.dmg
+            artifacts/**/*.exe

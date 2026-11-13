@@ -26,7 +26,11 @@ mac:
     - dmg
   icon: build/icon.icns
   category: public.app-category.business
-  artifactName: ${productName}-${version}.${ext}
+  artifactName: ${productName}-${version}-${arch}.${ext}
+publish:
+  provider: github
+  owner: AhmadFaraz-crypto
+  repo: StorePOS
 dmg:
   icon: build/icon.icns
 linux:
