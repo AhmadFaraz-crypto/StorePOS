@@ -75,6 +75,29 @@ jobs:
         with:
           draft: true
           generate_release_notes: true
+          append_body: true
+          body: |
+            ## Install
+
+            These builds are **not code-signed** (StorePOS isn't on the App Store or
+            Microsoft Store), so your OS warns on first launch. This is expected and
+            safe — a couple of one-time steps and you're in.
+
+            ### Windows
+            1. Download the `…-setup.exe` from **Assets** below and run it.
+            2. On the blue **"Windows protected your PC"** screen, click
+               **More info → Run anyway**.
+
+            ### macOS
+            Pick the right file: **Apple menu →  About This Mac**. If it says
+            *Apple M-series*, download the **arm64** `.dmg`; if *Intel*, the **x64** one.
+            1. Open the `.dmg` and drag **StorePOS** into **Applications**.
+            2. First launch only: in **Applications**, **right-click StorePOS → Open → Open**.
+            3. If macOS says the app is **"damaged" or can't be opened**, run this once in
+               **Terminal**, then open it again:
+               ```sh
+               xattr -cr /Applications/StorePOS.app
+               ```
           files: |
             artifacts/**/*.dmg
             artifacts/**/*.exe
