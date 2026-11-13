@@ -22,7 +22,9 @@ jobs:
           - os: macos-latest
             label: macOS (Apple Silicon)
             args: --mac --arm64
-          - os: macos-13
+          # Intel DMG cross-built on the Apple Silicon runner — GitHub's Intel
+          # (macos-13) runners queue for a long time, so we don't depend on them.
+          - os: macos-latest
             label: macOS (Intel)
             args: --mac --x64
     runs-on: ${{ matrix.os }}
@@ -63,6 +65,8 @@ jobs:
   release:
     name: Publish draft release
     needs: build
+    # Run even if one build fails, so a working installer still gets attached.
+    if: ${{ always() && !cancelled() }}
     runs-on: ubuntu-latest
     steps:
       - name: Download installers
