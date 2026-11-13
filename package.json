@@ -1,0 +1,56 @@
+{
+  "name": "storepos",
+  "version": "0.1.0",
+  "description": "StorePOS — a simple, offline-first point-of-sale for general stores",
+  "author": "StorePOS contributors",
+  "license": "MIT",
+  "keywords": [
+    "pos",
+    "point-of-sale",
+    "retail",
+    "electron",
+    "offline-first",
+    "sqlite"
+  ],
+  "main": "./out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "start": "electron-vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "pack": "electron-vite build && electron-builder --dir",
+    "dist": "electron-vite build && electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "@zxing/library": "^0.19.1",
+    "better-sqlite3": "^11.8.1",
+    "i18next": "^23.16.8",
+    "papaparse": "^5.7.0",
+    "qrcode": "^1.5.4",
+    "react-i18next": "^15.7.4",
+    "selfsigned": "^2.4.1",
+    "ws": "^8.22.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.10.5",
+    "@types/papaparse": "^5.5.2",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/ws": "^8.18.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^33.3.1",
+    "electron-builder": "^25.1.8",
+    "electron-vite": "^2.3.0",
+    "jsdom": "^25.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.7.3",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.9"
+  }
+}
