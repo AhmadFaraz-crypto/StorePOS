@@ -19,11 +19,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        # Not `npm ci`: a lockfile generated on one OS can't carry every
-        # platform's native optional deps (rollup/esbuild binaries), which
-        # trips npm/cli#4828 on the Linux runner. `npm install` resolves them
-        # per-platform.
-        run: npm install --no-audit --no-fund
+        run: npm ci
 
       - name: Typecheck
         run: npm run typecheck
